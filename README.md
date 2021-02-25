@@ -58,8 +58,13 @@
 
 ### 盒模型
 
-- 标准盒模型：标签得实际宽度 = 设置的宽度 + border宽度 + padding的宽度
-- 怪异盒模型：标签得实际宽度 = 设置的宽度 
+- 标准盒模型
+
+	- 
+
+- IE 盒子模型 
+
+	- 
 
 ### BFC
 
@@ -111,6 +116,34 @@
   不要在循环里读取节点的属性值
   动画速度越快，回流次数越少
 
+### 动画
+
+- 最小时间间隔
+
+	- 多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60*1000ms ＝ 16.7ms
+
+### 布局
+
+- float 
+
+	- 优点： 比较简单，兼容性也比较好。只要清除浮动做的好，是没有什么问题的
+	- 缺点：浮动元素是脱离文档流，要做清除浮动，这个处理不好的话，会带来很多问题，比如高度塌陷等。
+
+- 绝对布局
+
+	- 优点：很快捷，设置很方便，而且也不容易出问题
+	- 缺点：绝对定位是脱离文档流的，意味着下面的所有子元素也会脱离文档流，这就导致了这种方法的有效性和可使用性是比较差的
+
+- flex 布局
+
+	- 优点：简单快捷
+	- 缺点：不支持 IE8 及以下
+
+- table布局
+
+	- 优点：实现简单，代码少
+	- 缺点：当其中一个单元格高度超出的时候，两侧的单元格也是会跟着一起变高的，而有时候这种效果不是我们想要的。
+
 ## JS
 
 ### 数据类型
@@ -132,6 +165,28 @@
 
   undefined 代表的含义是未定义， null 代表的含义是空对象
 
+- Typeof
+
+	- typeof 对于基本类型，除了 null 都可以显示正确的类型
+
+	  typeof 1 // 'number'
+	    typeof '1' // 'string'
+	    typeof undefined // 'undefined'
+	    typeof true // 'boolean'
+	    typeof Symbol() // 'symbol'
+	    typeof b // b 没有声明，但是还会显示 undefined
+
+	- typeof 对于对象，除了函数都会显示 object
+
+	  typeof [] // 'object'
+	    typeof {} // 'object'
+	    typeof console.log // 'function'
+
+	- 对于 null来说，虽然它是基本类型，但是会显示 object
+
+- instanceof
+- Object.prototype.toString.call(xx)
+
 ### 闭包
 
 闭包就是能够读取其他函数内部变量的函数.
@@ -147,6 +202,16 @@ function a(){
 var a1 = a(); //注意，函数名只是一个标识（指向函数的指针），而（）才是执行函数；
  a1(); //1 
 a1(); //2 第二次调用n变量还在内存中
+
+- 闭包的定义很简单：函数 A 返回了一个函数 B，并且函数 B 中使用了函数 A 的变量，函数 B 就被称为闭包。
+
+	- 
+
+- 循环中使用闭包解决 var 定义函数的问题
+
+	- 
+
+		- 
 
 ### 作用域
 
@@ -166,6 +231,8 @@ a1(); //2 第二次调用n变量还在内存中
   将新对象指向构造函数,绑定 this
   执行构造函数中的代码
   返回新的对象
+
+	- 
 
 - 构造函数-原型-实例三者关系
 
@@ -325,7 +392,7 @@ call、apply、bind中的this被强绑定在指定的那个对象上；
 	- createDocumentFragment()    //创建一个DOM片段
 	- createElement()   //创建一个具体的元素
 	-  createTextNode()   //创建一个文本节点
-	- appendChild(node) 、//添加
+	- appendChild(node) //添加
 
 - 移除
 
@@ -341,9 +408,9 @@ call、apply、bind中的this被强绑定在指定的那个对象上；
 
 - 查找
 
-	- getElementById();
-	- getElementsByName();
-	- getElementsByTagName();
+	- getElementById()
+	- getElementsByName()
+	- getElementsByTagName()
 	- getElementsByClassName()
 	- querySelector()
 	- querySelectorAll()
@@ -369,82 +436,6 @@ call、apply、bind中的this被强绑定在指定的那个对象上；
 	- clientTop: 当前元素上边框的宽度
 	- offsetHeight: 当前元素内容区 + 内边距 + 边框 + 滚动条的高度
 	- offsetTop: 当前元素的边框距离父元素上外边距的距离
-
-### bom
-
-- cookie
-
-	- cookie是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器发起请求时被携带并发送到服务器，它通常是告知服务端两个请求是否来自同一浏览器，保持用户的登录状态。
-	- cookie保存的数据不能超过4k
-	- 会随请求发送到服务端，可设置过期时间
-
-- session
-
-	- session代表着服务器在和客户端一次会话的过程，存储着用户会话所需的属性及配置信息，当用户在不同页面之间跳转时，使整个用户会话一直存在。
-
-- localStorage
-
-	- localStorage:存储大小为5M
-	- 不参与请求，除非被清理，否则一直存在
-
-- sessionStorage
-
-	- 存储大小为5M
-	- 不参与请求，页面关闭清除
-
-- indexDB
-
-	- 存储大小没限制
-	- 不参与请求，除非被清理，否则一直存在，运行在浏览器上的非关系型数据库
-
-### 事件
-
-- 绑定
-
-	- ele.onxxx = function (event) {}
-
-	  兼容性很好，但是一个元素只能绑定一个处理程序，属性赋值会被覆盖 基本等同于写在HTML行间上
-
-	- ele.addEventListener(type事件类型, fn处理函数, false);
-
-	  IE9以下不兼容，可以为一个事件绑定多个处理程序
-
-	- ele.attachEvent(‘on’ + type, fn); 
-
-	  IE独有，一个事件同样可以绑定多个处理程序
-
-- 解除
-
-	- ele.onclick = false/‘’/null;
-	- ele.removeEventListener(type, fn, false);
-	- ele.detachEvent(‘on’ + type, fn);
-
-- 事件传播
-
-	- 捕获阶段=》目标阶段=》冒泡阶段
-	- 事件传播的阻止
-
-		- stopPropagation()
-
-	- 阻止默认行为
-
-		- preventDefault()
-
-- 事件委托
-
-  利用事件流的冒泡特性，将子节点的事件绑定在父节点上，然后在回调里面使用事件对象进行区分，优点是节省内存且不需要给子节点销毁事件。
-
-- 鼠标事件
-
-	- onmouseover、onmouseout
-
-		- 支持事件冒泡
-
-	- onmouseenter、onmouseleave
-
-- 事件对象
-
-  这个对象里面存放着触发事件的状态，如触发事件的当前元素，键盘事件是哪个按键触发的，滚动事件的位置等等
 
 ### 内置对象
 
@@ -545,7 +536,6 @@ call、apply、bind中的this被强绑定在指定的那个对象上；
 		- every()	检测数值元素的每个元素是否都符合条件。
 		- filter()	检测数值元素，并返回符合条件所有元素的数组。
 		- find()	返回符合传入测试（函数）条件的数组元素。
-		- findIndex()	返回符合传入测试（函数）条件的数组元素索引。
 		- indexOf()	搜索数组中的元素，并返回它所在的位置。
 		- some()	检测数组元素中是否有元素符合指定条件。
 		- isArray()	判断对象是否为数组。
@@ -623,10 +613,21 @@ call、apply、bind中的this被强绑定在指定的那个对象上；
 			  'abcdefg'.substr(3, 2);  // de
 			  'abcdefg'.substr(-3, 2); // ef
 
+		- 首字母大写
+
+			- 
+
+		- 找到下标对应的数字
+
+			- 
+
 - Number 
 
 	- toFixed(x)	把数字转换为字符串，结果的小数点后有指定位数的数字。
 	- toString()	把数字转换为字符串，使用指定的基数。
+	- 转千分位
+
+		- 
 
 - Math
 
@@ -651,6 +652,9 @@ call、apply、bind中的this被强绑定在指定的那个对象上；
 	- getMonth()	从 Date 对象返回月份 (0 ~ 11)。
 	- getSeconds()	返回 Date 对象的秒数 (0 ~ 59)。
 	- getTime()	返回 1970 年 1 月 1 日至今的毫秒数。
+	- 转换时间戳
+
+		- 
 
 - 正则
 - Global
@@ -697,43 +701,7 @@ then可以被链式的调用。
 
 	- Promise 的简单实现
 
-	  class MyPromise {
-	    constructor(fn) {
-	      this.resolvedCallbacks = [];
-	      this.rejectedCallbacks = [];
-	      this.state = "PADDING";
-	      this.value = "";
-	      fn(this.resolve.bind(this), this.reject.bind(this));
-	    }
-	    resolve(value) {
-	      if (this.state === "PADDING") {
-	        this.state = "RESOLVED";
-	        this.value = value;
-	        this.resolvedCallbacks.forEach(cb => cb());
-	      }
-	    }
-	  
-	    reject(value) {
-	      if (this.state === "PADDING") {
-	        this.state = "REJECTED";
-	        this.value = value;
-	        this.rejectedCallbacks.forEach(cb => cb());
-	      }
-	    }
-	  
-	    then(resolve = function() {}, reject = function() {}) {
-	      if (this.state === "PADDING") {
-	        this.resolvedCallbacks.push(resolve);
-	        this.rejectedCallbacks.push(reject);
-	      }
-	      if (this.state === "RESOLVED") {
-	        resolve(this.value);
-	      }
-	      if (this.state === "REJECTED") {
-	        reject(this.value);
-	      }
-	    }
-	  }
+		- 
 
 - var,let和const的区别是什么
 
@@ -750,17 +718,9 @@ then可以被链式的调用。
 
 	-   JavaScript没有真正的类，一直也是通过函数加原型的形式来模拟，class也不例外，只是语法糖，本质还是函数。需要先声明再使用，内部的方法不会被遍历，且没有函数的prototype属性。不过相较ES6之前无论是定义还是继承都好理解了很多。继承主要是使用extends和super关键字，本质类似于ES5的寄生组合继承
 
-	  class Parent {
-	      constructor(name) {
-	        this.name = name;
-	      }
-	    }
-	    class Child extends Parent {
-	      constructor(name, age) {
-	        super(name);  // 相当于Parent.call(this, name)
-	        this.age = age;
-	      }
-	    }
+		- 1.类中的构造器不是必须要写的，要对实例进行一些初始化的操作，如添加指定属性时才写。
+		- 2.如果A类继承了B类，且A类中写了构造器，那么A类构造器中的super是必须要调用的。
+		- 3.类中所定义的方法，都放在了类的原型对象上，供实例去使用。
 
 - ES-Module
 
@@ -888,7 +848,7 @@ then可以被链式的调用。
 - 同步任务
 - 异步任务
 
-	- 微任务（有限执行）
+	- 微任务（优先执行）
 
 		- Promise.then catch finally、node 中的 process.nextTick 、对 Dom 变化监听的 MutationObserver
 
@@ -916,6 +876,15 @@ then可以被链式的调用。
 	      }
 	      return target
 	    }
+
+### 纯函数
+
+- 1.	一类特别的函数: 只要是同样的输入(实参)，必定得到同样的输出(返回)
+- 2.	必须遵守以下一些约束
+
+	- 1)	不得改写参数数据
+	- 2)	不会产生任何副作用，例如网络请求，输入和输出设备
+	- 3)	不能调用Date.now()或者Math.random()等不纯的方法  
 
 ### 柯里化
 
@@ -998,6 +967,1109 @@ then可以被链式的调用。
 	        }
 	      }
 	    }
+
+### 【js语句(代码)】与【js表达式】
+
+- 表达式：一个表达式会产生一个值，可以放在任何一个需要值的地方
+
+	- (1). a
+	- (2). a+b
+	- (3). demo(1)
+	- (4). arr.map() 
+	- (5). function test () {}
+
+- 语句(代码)
+
+	- (1).if(){}
+	- (2).for(){}
+	- (3).switch(){case:xxxx}
+
+## 框架
+
+### Vue
+
+- Router
+
+	- 原理
+
+		- hash模式
+
+			- window.location.hash
+
+		- history模式
+
+			- pushState（）
+			- replaceState（）
+
+	- 路由的钩子函数
+
+		- beforeEach，afterEach,主要有3个参数to，from，next
+
+			- to：route即将进入的目标路由对象
+			- from：route当前导航正要离开的路由
+			- next：function一定要调用该方法resolve这个钩子。执行效果依赖next方法的调用参数。可以控制网页的跳转
+
+- Vuex
+
+	- state
+	- mutations
+	- getters
+	- action
+	- modules
+	- plugins
+
+- 问题
+
+	- 简单实现双向数据绑定
+
+		- 
+
+	- 双向绑定数据的原理
+
+		- 采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调
+
+	- data 为什么必须是函数
+
+		- 每个组件都是 Vue 的实例
+		- 组件共享 data 属性，当 data 的值是同一个引用类型的值时，改变其中一个会影响其他
+
+	- Proxy 与 Object.defineProperty 对比
+
+		- Object.defineProperty 虽然已经能够实现双向绑定了，但是他还是有缺陷的。
+		- 只能对属性进行数据劫持，所以需要深度遍历整个对象 对于数组不能监听到数据的变化
+		- Proxy就没以上的问题，原生支持监听数组变化，并且可以直接对整个对象进行拦截，所以 Vue 也将在下个大版本中使用 Proxy 替换 Object.defineProperty
+
+	- 路由原理
+
+		- hash模式
+
+			- hash("#")
+
+		- history模式
+
+			- pushState（），replaceState（）可以对浏览器历史记录栈进行修改，以及popState事件的监听到状态变更
+
+	- key
+
+		- 渲染项目列表时，key 属性允许 Vue 跟踪每个 Vnode。key 值必须是唯一的。
+		- 如果没有使用 key 属性，并且列表的内容发生了改变（例如对列表进行排序），则虚拟 DOM 宁愿使用更新的数据来修补节点，来反映更改，而不是上下移动元素。这是默认模式，非常有效。
+		- 当提供唯一的键值 IS 时，将根据对键的更改对元素进行重新排序（并且不使用新数据对它们进行修补），如果删除了 key（例如，删除列表中的项目时），则对应的元素节点也被销毁或删除。
+
+	- 父组件监听子组件的生命周期
+
+		- $emit
+
+		  // Parent.vue
+		  <Child @mounted="doSomething"/>
+		      
+		  // Child.vue
+		  mounted() {
+		    this.$emit("mounted");
+		  }
+
+		- @hook
+
+		  //  Parent.vue
+		  <Child @hook:mounted="doSomething" ></Child>
+		  
+		  doSomething() {
+		     console.log('父组件监听到 mounted 钩子函数 ...');
+		  },
+		  
+		  //  Child.vue
+		  mounted(){
+		     console.log('子组件触发 mounted 钩子函数 ...');
+		  },        
+		  // 以上输出顺序为：
+		  // 子组件触发 mounted 钩子函数 ...
+		  // 父组件监听到 mounted 钩子函数 ...
+
+	- 组件中写 name 选项有什么作用
+
+		- 项目使用 keep-alive 时，可搭配组件 name 进行缓存过滤
+		- DOM 做递归组件时需要调用自身 name
+		- vue-devtools 调试工具里显示的组见名称是由vue中组件name决定的
+
+- 生命周期
+
+	- 
+	- 外部监听生命周期函数
+
+		- <child @hook:created="handleChildCreated" />
+		- 
+
+- 自定义指令
+
+	- Vue.directive(id,definition)
+	- 钩子函数
+
+		- bind
+
+			- 只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个在绑定时执行一次的初始化动作。
+
+		- inserted
+
+			- 被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于 document 中）
+
+		- update
+
+	- 钩子函数的参数
+
+		- (el, binding, vnode, oldVnode)
+
+- keep-alive使用
+
+	- keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，避免重新渲染
+	- 提供 include 和 exclude 属性，两者都支持字符串或正则表达式， include 表示只有名称匹配的组件会被缓存，exclude 表示任何名称匹配的组件都不会被缓存 ，其中 exclude 的优先级比 include 高；
+	- 对应两个钩子函数 activated 和 deactivated ，当组件被激活时，触发钩子函数 activated，当组件被移除时，触发钩子函数 deactivated。
+
+### React
+
+- 问题
+
+	- React 中 keys 的作用是什么
+
+		- 简单的说: key是虚拟DOM对象的标识, 在更新显示时key起着极其重要的作用。
+		- 详细的说: 当状态中的数据发生变化时，react会根据【新数据】生成【新的虚拟DOM】, 随后React进行【新虚拟DOM】与【旧虚拟DOM】的diff比较
+
+			- a. 旧虚拟DOM中找到了与新虚拟DOM相同的key：
+
+				- (1).若虚拟DOM中内容没变, 直接使用之前的真实DOM
+				- (2).若虚拟DOM中内容变了, 则生成新的真实DOM，随后替换掉页面中之前的真实DOM
+
+			- b. 旧虚拟DOM中未找到与新虚拟DOM相同的key,根据数据创建新的真实DOM，随后渲染到到页面
+
+		- 用index作为key可能会引发的问题
+
+			- 若对数据进行：逆序添加、逆序删除等破坏顺序操作:会产生没有必要的真实DOM更新 ==> 界面效果没问题, 但效率低。
+			- 如果结构中还包含输入类的DOM：会产生错误DOM更新 ==> 界面有问题。
+
+	- 传入 setState 函数的第二个参数的作用是什么
+
+		- 该函数会在setState函数调用完成并且组件开始重渲染的时候被调用，我们可以用该函数来监听渲染是否完成
+
+	- shouldComponentUpdate 
+
+		- 允许我们手动地判断是否要进行组件更新，根据组件的应用场景设置函数的合理返回值能够帮我们避免不必要的更新
+
+	- redux中间件
+
+		- 中间件提供第三方插件的模式，自定义拦截 action -> reducer 的过程。变为 action -> middlewares -> reducer。这种机制可以让我们改变数据流，实现如异步action ，action 过滤，日志输出，异常报告等功能
+
+			- redux-logger：提供日志输出
+			- redux-thunk：处理异步操作
+
+	- 为什么虚拟dom会提高性能
+
+		- 虚拟dom相当于在js和真实dom中间加了一个缓存，利用dom diff算法避免了没有必要的dom操作，从而提高性能
+		- 用 JavaScript 对象结构表示 DOM 树的结构；然后用这个树构建一个真正的 DOM 树，插到文档当中
+		- 当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异
+		- 把2所记录的差异应用到步骤1所构建的真正的DOM树上，视图就更新
+		- 
+
+	- diff算法
+
+		- 把树形结构按照层级分解，只比较同级元素
+		- 给列表结构的每个单元添加唯一的key属性，方便比较
+		- React 只会匹配相同 class 的 component（这里面的class指的是组件的名字）
+		- 合并操作，调用 component 的 setState 方法的时候, React 将其标记为 - dirty.到每一个事件循环结束, React 检查所有标记 dirty的 component重新绘制.
+		- 选择性子树渲染。开发人员可以重写shouldComponentUpdate提高diff的性能
+
+	- 类组件方法this问题
+
+		- 类中的方法默认开启了局部的严格模式，所以方法中的this为undefined
+		- 在constructor里通过bind.(this)绑定
+
+			-         constructor() {
+          this.changeWeather = this.changeWeather.bind(this)
+        }
+			- changeWeather = () => {}
+
+- 组件通信方式
+
+	- 父组件向子组件通信
+	- 子组件向父组件通信
+
+- 虚拟DOM
+
+	- 1.本质是Object类型的对象（一般对象）
+	- 2.虚拟DOM比较“轻”，真实DOM比较“重”，因为虚拟DOM是React内部在用，无需真实DOM上那么多的属性。
+	- 3.虚拟DOM最终会被React转化为真实DOM，呈现在页面上。
+	-       var div = {
+        tagName: 'ul',
+        props: { class: 'list' },
+        children: [
+          { tagName: 'li', children: ['item1'] },
+          { tagName: 'li', children: ['item2'] }
+        ]
+      }
+
+- jsx语法规则
+
+	- 1.定义虚拟DOM时，不要写引号。
+	- 2.标签中混入JS表达式时要用{}。
+	- 3.样式的类名指定不要用class，要用className。
+	- 4.内联样式，要用style={{key:value}}的形式去写。
+	- 5.只有一个根标签
+	- 6.标签必须闭合
+	- 7.标签首字母
+
+		- 若小写字母开头，则将该标签转为html中同名元素，若html中无该标签对应的同名元素，则报错。
+		- 若大写字母开头，react就去渲染对应的组件，若组件没有定义，则报错。
+
+- 组件
+
+	- 函数式组件
+
+		- 问题
+
+			- this是undefined，因为babel编译后开启了严格模式
+
+		- 过程
+
+			- 1.React解析组件标签，找到组件。
+			- 2.发现组件是使用函数定义的，随后调用该函数，将返回的虚拟DOM转为真实DOM，随后呈现在页面中。
+
+	- 类式组件
+
+		- 问题
+
+			- render是放在哪里的？—— 该组件的原型对象上，供实例使用。
+			- render中的this是谁？—— 该组件的实例对象。
+
+		- 过程
+
+			- 1.	React内部会创建组件实例对象
+			- 2.	调用render()得到虚拟DOM, 并解析为真实DOM
+			- 3.	插入到指定的页面元素内部
+
+	- 组件实例三大属性
+
+		- state
+
+			- 理解
+
+				- 1.	state是组件对象最重要的属性, 值是对象(可以包含多个key-value的组合)
+				- 2.	组件被称为"状态机", 通过更新组件的state来更新对应的页面显示(重新渲染组件)
+
+			-  强烈注意
+
+				- 1.	组件中render方法中的this为组件实例对象
+				- 2.	组件自定义的方法中this为undefined，如何解决？
+
+					- a)	强制绑定this: 通过函数对象的bind()
+					- b)	箭头函数
+
+				- 3.	状态数据，不能直接修改或更新
+
+		- props
+
+			- 理解
+
+				- 1.	每个组件对象都会有props(properties的简写)属性
+				- 2.	组件标签的所有属性都保存在props中
+
+			- 作用
+
+				- 1.	通过标签属性从组件外向组件内传递变化的数据
+				- 2.	注意: 组件内部不要修改props数据
+
+			- 限制
+
+				- Person.propTypes
+
+					- 
+
+				- Person.defaultProps
+
+					- 
+
+		- refs
+
+			- 组件内的标签可以定义ref属性来标识自己
+			- 方式
+
+				- 1.	字符串形式的ref
+
+					- <input ref="input1"/>
+
+				- 2.	回调形式的ref
+
+					- <input ref={(c)=>{this.input1 = c}}
+
+				- 3.	createRef创建ref容器
+
+					- myRef = React.createRef()
+<input ref={this.myRef}/>
+
+- 生命周期
+
+	- 理解
+
+		- 1.	组件从创建到死亡它会经历一些特定的阶段
+		- 2.	React组件中包含一系列勾子函数(生命周期回调函数), 会在特定的时刻调用。
+		- 3.	我们在定义组件时，会在特定的生命周期回调函数中，做特定的工作。
+
+	- 三个阶段（旧）
+
+		- 初始化阶段
+
+			- 1.	constructor()
+			- 2.	componentWillMount()
+			- 3.	render()
+			- 4.	componentDidMount()
+
+		- 更新阶段
+
+			- 1.	shouldComponentUpdate()
+			- 2.	componentWillUpdate()
+			- 3.	render()
+			- 4.	componentDidUpdate()
+
+		- 卸载组件
+
+			- 1.	componentWillUnmount()
+
+	- 三个阶段（新）
+
+		- 初始化阶段
+
+			- 1.	constructor()
+			- 2.	getDerivedStateFromProps
+			- 3.	render()
+			- 4.	componentDidMount()
+
+		-  更新阶段
+
+			- 1.	getDerivedStateFromProps
+			- 2.	shouldComponentUpdate()
+			- 3.	render()
+			- 4.	getSnapshotBeforeUpdate
+			- 5.	componentDidUpdate()
+
+		- 卸载组件
+
+			- 1.	componentWillUnmount()
+
+	- 重要的勾子
+
+		- 1.	render
+		- 2.	componentDidMount
+		- 3.	componentWillUnmount
+
+	- 即将废弃的勾子
+
+		- 1.	componentWillMount
+		- 2.	componentWillReceiveProps
+		- 3.	componentWillUpdate
+
+- 路由
+
+	- 什么是路由
+
+		- 1.	一个路由就是一个映射关系(key:value)
+		- 2.	key为路径, value可能是function或component
+
+	- 内置组件
+
+		- 1.	<BrowserRouter>
+
+			- ReactDOM.render(
+	<BrowserRouter>
+		<App/>
+	</BrowserRouter>,
+	document.getElementById('root')
+)
+
+		- 2.	<HashRouter>
+		- 3.	<Route>
+
+			- <Route path="/home" component={Home}/>
+
+		- 4.	<Redirect>
+
+			- <Redirect to="/about"/>
+
+		- 5.	<Link>
+		- 6.	<NavLink>
+
+			- <NavLink activeClassName="test" className="list-group-item" to="/home">Home</NavLink>
+
+		- 7.	<Switch>
+
+			- <Switch>
+	<Route path="/about" component={About}/>
+	<Route path="/home" component={Home}/>
+	<Redirect to="/about"/>
+</Switch>
+
+	- 基本使用
+
+		- 1.明确好界面中的导航区、展示区
+		- 2.导航区的a标签改为Link标签
+
+			- <Link to="/xxxxx">Demo</Link>
+
+		- 3.展示区写Route标签进行路径的匹配
+
+			- <Route path='/xxxx' component={Demo}/>
+
+		- 4.<App>的最外侧包裹了一个<BrowserRouter>或<HashRouter>
+
+	- 三个固定的属性
+
+		- history
+
+			- go: ƒ go(n)
+			- push: ƒ push(path, state)
+			- replace: ƒ replace(path, state)
+
+		- location
+
+			- pathname: "/about"
+			- search: ""
+			- state: undefined
+
+		- match
+
+			- params: {}
+			- path: "/about"
+			- url: "/about"
+
+	- Switch的使用
+
+		- 1.通常情况下，path和component是一一对应的关系。
+		- 2.Switch可以提高路由匹配效率(单一匹配)。
+
+	- 严格匹配与模糊匹配
+
+		- 1.默认使用的是模糊匹配（简单记：【输入的路径】必须包含要【匹配的路径】，且顺序要一致）
+		- 2.开启严格匹配：<Route exact={true} path="/about" component={About}/>
+		- 3.严格匹配不要随便开启，需要再开，有些时候开启会导致无法继续匹配二级路由
+
+	- Redirect的使用	
+
+		- 一般写在所有路由注册的最下方，当所有路由都无法匹配时，跳转到Redirect指定的路由
+
+	- 嵌套路由
+
+		- 1.注册子路由时要写上父路由的path值
+		- 2.路由的匹配是按照注册路由的顺序进行的
+
+	- 传参
+
+		- params参数
+
+			- 路由链接(携带参数)：<Link to='/demo/test/tom/18'}>详情</Link>
+			- 注册路由(声明接收)：<Route path="/demo/test/:name/:age" 
+			- 接收参数：this.props.match.params
+
+		- search参数
+
+			- 路由链接(携带参数)：<Link to='/demo/test?name=tom&age=18'}>详情</Link>
+			- 注册路由(无需声明，正常注册即可)：<Route path="/demo/test" component={Test}/>
+			- 接收参数：this.props.location.search
+
+		- state参数
+
+			- 路由链接(携带参数)：<Link to={{pathname:'/demo/test',state:{name:'tom',age:18}}}>详情</Link>
+			- 注册路由(无需声明，正常注册即可)：<Route path="/demo/test" component={Test}/>
+			- 接收参数：this.props.location.state
+
+	- 编程式路由导航
+
+		- 借助this.prosp.history对象上的API对操作路由跳转、前进、后退
+
+			- this.prosp.history.push()
+			- this.prosp.history.replace()
+			- this.prosp.history.go()
+
+	- BrowserRouter与HashRouter的区别
+
+		- 底层原理不一样
+
+			- BrowserRouter使用的是H5的history API，不兼容IE9及以下版本
+			- HashRouter使用的是URL的哈希值
+
+		- path表现形式不一样
+
+			- BrowserRouter的路径中没有#,例如：localhost:3000/demo/test
+			- HashRouter的路径包含#,例如：localhost:3000/#/demo/test
+
+		- 刷新后对路由state参数的影响
+
+			- BrowserRouter没有任何影响，因为state保存在history对象中
+			- HashRouter刷新后会导致路由state参数的丢失
+
+- redux
+
+	- 理解
+
+		- 专门用于做状态管理的JS库
+		- 集中式管理react应用中多个组件共享的状态
+
+	- 工作流程
+
+		- 
+
+	- 核心概念
+
+		- action
+
+			- 1.	动作的对象
+			- 2.	包含2个属性
+
+				- type：标识属性, 值为字符串, 唯一, 必要属性
+				- data：数据属性, 值类型任意, 可选属性
+				- { type: 'ADD_STUDENT',data:{name: 'tom',age:18} }
+
+		- reducer
+
+			- 1.	用于初始化状态、加工状态
+			- 2.	加工时，根据旧的state和action， 产生新的state的纯函数
+
+		- store
+
+			- 1.	将state、action、reducer联系在一起的对象
+			- 2.	如何得到此对象?
+
+				- 1)	import {createStore} from 'redux'
+2)	import reducer from './reducers'
+3)	const store = createStore(reducer)
+
+			- 3.	此对象的功能?
+
+				- 1)	getState(): 得到state
+				- 2)	dispatch(action): 分发action, 触发reducer调用, 产生新的state
+				- 3)	subscribe(listener): 注册监听, 当产生了新的state时, 自动调用
+
+	- 核心API
+
+		- createstore()
+
+			- 作用：创建包含指定reducer的store对象
+
+		- store对象
+
+			- 1.	作用: redux库最核心的管理对象
+			- 2.维护state和reducer
+			- 3.	核心方法
+
+				- 1)	getState()
+				- 2)	dispatch(action)
+				- 3)	subscribe(listener)
+
+			- 4.	具体编码
+
+				- 1)	store.getState()
+				- 2)	store.dispatch({type:'INCREMENT', number})
+				- 3)	store.subscribe(render)
+
+		-  applyMiddleware()
+
+			- 应用上基于redux的中间件(插件库)
+
+		- combineReducers()
+
+			- 合并多个reducer函数
+
+	- 代码编写
+
+		- src下创建redux文件夹
+
+			- 创建store.js
+
+				- 1).引入redux中的createStore函数，创建一个store
+2).createStore调用时要传入一个为其服务的reducer
+3).记得暴露store对象
+
+			- 创建reducer.js
+
+				- 1).reducer的本质是一个函数，接收：preState,action，返回加工后的状态
+2).reducer有两个作用：初始化状态，加工状态
+3).reducer被第一次调用时，是store自动触发的，传递的preState是undefined
+
+			- 创建actionCreator.js
+
+				- 专门用于创建action对象
+
+			- 创建actionTypes
+
+				- 放置容易写错的type值
+
+		- 在index.js中监测store中状态的改变，一旦发生改变重新渲染<App/>
+
+	- 异步
+
+		- redux-thunk
+
+			- 配置在store中
+			- 创建action的函数不再返回一般对象，而是一个函数，该函数中写异步任务。
+
+				- 
+
+			- 3).异步任务有结果后，分发一个同步的action去真正操作数据。
+
+- react-redux
+
+	- 概念
+
+		- 1).UI组件:不能使用任何redux的api，只负责页面的呈现、交互等。
+		- 2).容器组件：负责和redux通信，将结果交给UI组件。
+
+	- 创建容器组件
+
+		- connect(mapStateToProps,mapDispatchToProps)(UI组件)
+		- mapStateToProps:映射状态，返回值是一个对象
+		- mapDispatchToProps:映射操作状态的方法，返回值是一个对象
+
+	- 容器组件中的store是靠props传进去的，而不是在容器组件中直接引入
+
+		- <App/>包裹一个<Provider store={store}>
+
+- setState更新状态的2种写法
+
+	- 对象式
+
+		- 
+
+	- 函数式
+
+		- 
+
+- lazyLoad
+
+	- 通过React的lazy函数配合import()函数动态加载路由组件
+
+		- 路由组件代码会被分开打包
+
+			- const Login = lazy(()=>import('@/pages/Login'))
+
+	- 通过<Suspense>指定在加载得到路由打包文件前显示一个自定义loading界面
+
+		- 
+
+- Hooks
+
+	- useState()
+
+		- State Hook让函数组件也可以有state状态, 并进行状态数据的读写操作
+		- const [xxx, setXxx] = React.useState(initValue)  
+		- 参数: 第一次初始化指定的值在内部作缓存
+		- 返回值: 包含2个元素的数组, 第1个为内部当前状态值, 第2个为更新状态值的函数
+		- setXxx()2种写法
+
+			- setXxx(newValue): 参数为非函数值, 直接指定新的状态值, 内部用其覆盖原来的状态值
+			- setXxx(value => newValue): 参数为函数, 接收原本的状态值, 返回新的状态值, 内部用其覆盖原来的状态值
+
+		- 
+
+	- useEffect()
+
+		- Effect Hook 可以让你在函数组件中执行副作用操作(用于模拟类组件中的生命周期钩子)
+		- useEffect(() => { 
+  // 在此可以执行任何带副作用操作
+  return () => { // 在组件卸载前执行
+    // 在此做一些收尾工作, 比如清除定时器/取消订阅等
+  }
+}, [stateValue]) // 如果指定的是[], 回调函数只会在第一次render()后执行
+		- 可以把 useEffect Hook 看做如下三个函数的组合
+
+			- componentDidMount()
+			- componentDidUpdate()
+			- componentWillUnmount() 
+
+		- 
+
+	- useRef()
+
+		-  Ref Hook可以在函数组件中存储/查找组件内的标签或任意其它数据
+		- const refContainer = useRef()
+		- 作用:保存标签对象,功能与React.createRef()一样
+		- 
+
+- Fragment
+
+	- 可以不用必须有一个真实的DOM根标签了
+
+- 组件优化
+
+	- Component的2个问题 
+
+		- 只要执行setState(),即使不改变状态数据, 组件也会重新render()
+		- 只当前组件重新render(), 就会自动重新render子组件 ==> 效率低
+
+	- 解决
+
+		- 办法1
+
+			- 重写shouldComponentUpdate()方法
+			- 比较新旧state或props数据, 如果有变化才返回true, 如果没有返回false
+
+		- 办法2:
+
+			- 使用PureComponent
+			- PureComponent重写了shouldComponentUpdate(), 只有state或props数据有变化才返回true
+			- 注意
+
+				- 只是进行state和props数据的浅比较, 如果只是数据对象内部数据变了, 返回false 
+				- 不要直接修改state数据, 而是要产生新数据
+
+- render props/插槽
+
+	- 使用children
+
+		- props: 通过组件标签体传入结构
+
+			- 
+
+	- 使用render
+
+		- props: 通过组件标签属性传入结构, 一般用render函数属性
+
+			- 
+
+- 错误边界
+
+	- 用来捕获后代组件错误，渲染出备用页面
+	- 只能捕获后代组件生命周期产生的错误，不能捕获自己组件产生的错误和其他组件在合成事件、定时器中产生的错误
+	- 使用方式
+
+		- getDerivedStateFromError配合componentDidCatch
+
+	- 
+
+### 微信小程序
+
+- 登录
+
+	- OpenId 
+
+		- 一个用户对于一个小程序／公众号的标识，开发者可以通过这个标识识别出用户。
+
+	- UnionId 
+
+		- 是一个用户对于同主体微信小程序／公众号／APP的标识，开发者需要在微信开放平台下绑定相同账号的主体。开发者可通过UnionId，实现多个小程序、公众号、甚至APP 之间的数据互通了。
+
+	- wx.login 官方提供的登录能力
+
+		- 获取 code向服务端，服务端拿到 code 调用微信登录凭证校验接口，微信服务器返回 openid 和会话密钥 session_key ，此时开发者服务端便可以利用 openid 生成用户入库，再向小程序客户端返回自定义登录态
+
+	- wx.checkSession校验用户当前的session_key是否有效
+	- wx.authorize 提前向用户发起授权请求
+	- wx.getUserInfo 获取用户基本信息
+
+### MVVM的理解
+
+- Model 代表数据模型，也可以在Model中定义数据修改和操作的业务逻辑
+- View 代表UI 组件，它负责将数据模型转化成UI 展现出来
+- ViewModel 监听模型数据的改变和控制视图行为、处理用户交互，简单理解就是一个同步View 和 Model的对象，连接Model和View
+
+## Node
+
+### 单线程
+
+### 非阻塞 I/O
+
+### 中间件
+
+- 功能的封装方式，就是封装在程序中处理http请求的功能
+- 中间件有一个next()函数，如果不调用next函数，请求就在这个中间件中终止了
+
+## 设计模式
+
+### 发布订阅
+
+- 
+
+### 代理
+
+- 
+
+## 工程化
+
+### webpack
+
+- 构建流程
+- 5大模块
+- 热更新如何实现
+- 性能优化
+- dll
+- tree-shaking
+
+### 发布
+
+- 项目发布流程
+
+### babel原理
+
+- ES6、7代码输入 -> babylon进行解析 -> 得到AST（抽象语法树）-> plugin用babel-traverse对AST树进行遍历转译 ->得到新的AST树->用babel-generator通过AST树生成ES5代码
+
+### 模块化
+
+- ES6
+
+	- 
+
+- CommonJS
+
+	- 
+
+- AMD
+
+	- 
+
+## 安全
+
+### XSS跨站脚本攻击
+
+- 往Web页面里插入恶意html标签或者javascript代码
+
+	- 最普遍的做法是转义输入输出的内容，对于引号，尖括号，斜杠进行转义
+
+### CSRF跨站请求伪造
+
+- CSRF 就是利用用户的登录态发起恶意请求
+
+	- Get 请求不对数据进行修改
+	- 不让第三方网站访问到用户 Cookie
+	- 阻止第三方网站请求接口
+	- 请求时附带验证信息，比如验证码或者 token
+
+### SQL注入
+
+- SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令
+
+## 优化
+
+### webpack打包
+
+- loader
+- dll
+- happypack
+- 代码压缩
+- tree shaking
+- thunk splice
+- 图片base64·
+- exterals
+- 路由懒加载
+
+### 网络
+
+- Gzip
+- cdn
+- 缓存
+- preload/prefetch/懒加载
+- ssr
+
+### 代码优化
+
+- loading
+- 虚拟列表
+- 懒加载
+- 海量数据优化渲染
+
+	- 
+
+### SEO
+
+- 合理的title、description、keywords：搜索对着三项的权重逐个减小，title值强调重点即可；description把页面内容高度概括，不可过分堆砌关键词；keywords列举出重要关键词。
+- 语义化的HTML代码，符合W3C规范：语义化代码让搜索引擎容易理解网页
+- 重要内容HTML代码放在最前：搜索引擎抓取HTML顺序是从上到下，保证重要内容一定会被抓取
+- 重要内容不要用js输出：爬虫不会执行js获取内容
+- 少用iframe：搜索引擎不会抓取iframe中的内容
+- 非装饰性图片必须加alt
+- 提高网站速度：网站速度是搜索引擎排序的一个重要指标
+- 前后端分离的项目使用服务端同构渲染，既提高了访问速度，同时重要关键内容首次渲染不通过 js 输出
+- 友情链接，好的友情链接可以快速的提高你的网站权重
+- 外链，高质量的外链，会给你的网站提高源源不断的权重提升
+- 向各大搜索引擎登陆入口提交尚未收录站点
+- 层级尽量明了，不过分嵌套层级关系。
+
+## TypeSctipt
+
+### 介绍
+
+- TypeScript 并不是一个完全新的语言, 它是 JavaScript 的超集，为 JavaScript 的生态增加了类型机制，并最终将代码编译为纯粹的 JavaScript 代码。
+
+### 优势
+
+- 清楚你的实例来自于哪个类，这个类继承了什么类。
+- 编辑器友好，轻松点出实例的所有方法或者类的静态方法。
+- 让你的代码更严谨，该传参传参，该为null时判断null，增加你发现bug的概率。
+- 定义对象规范，这个对象啥用，啥属性，看interface就够了。
+
+### 数据类型
+
+- String
+
+	- 一个保存字符串的文本，类型声明为 string。可以发现类型声明可大写也可小写，后文同理。
+	- let name: string = 'muyy'
+	- let name2: String = 'muyy'
+
+- Boolen
+
+	- boolean 是 true 或 false 的值，所以 let isBool3: boolean = new Boolean(1) 就会编译报错，因为 new Boolean(1) 生成的是一个 Bool 对象。
+	- let isBool1: boolean = false
+
+- Number
+
+	- let number: number = 10;
+
+- Array
+
+	- 组是 Array 类型。然而，因为数组是一个集合，我们还需要指定在数组中的元素的类型。我们通过 Array<type> or type[] 语法为数组内的元素指定类型
+	- let arr:number[] = [1, 2, 3, 4, 5];
+	- let arr2:Array<number> = [1, 2, 3, 4, 5];
+	- let arr3:string[] = ["1","2"];
+	- let arr4:Array<string> = ["1","2"];
+
+- Tuple 
+
+	- Tuple 类型相对于 Array 类型, 其允许元素的类型不一定相同
+	- let x: [string, number]
+	- x = ['a', 1]
+
+- Enums 
+
+	- 列出所有可用值，一个枚举的默认初始值是 0。一开始的范围可以作如下调整:
+	- enum Role {Employee = 3, Manager, Admin}
+	- let role: Role = Role.Employee
+	- console.log(role) // 3
+	- console.log(Role[4]) // Manager
+
+- Any 
+
+	- any 是默认的类型，其类型的变量允许任何类型的值：
+	- let notSure:any = 10;
+	- let notSure2:any[] = [1,"2",false];
+
+- Void 
+
+	- JavaScript 没有空值 Void 的概念，在 TypeScirpt 中，可以用 void 表示没有任何返回值的函数：
+	- function alertName(): void {
+  console.log('My name is muyy')
+}
+
+- Unknow 
+
+	- 任何使用 any 类型的地方推荐使用 unknow 类型代替它。
+
+- Never 
+
+	- 当函数 throw 或者返回错误, 循环永远为 true 时可以声明为 never 类型。
+
+### 函数
+
+- 为函数定义类型
+
+  function add(x: string, y: string): string {
+      return "Hello TypeScript";
+    }
+  
+    let add2 = function (x: string, y: string): string {
+      return "Hello TypeScript";
+    }
+  
+    let add3: (x: string, y: string) => string = function (x: string, y: string): string {
+      return "Hello TypeScript";
+    }
+
+- 可选参数和默认参数
+
+  function buildName(firstName: string, lastname?: string) {
+      console.log(lastname ? firstName + "" + lastname : firstName)
+    }
+  
+    let res1 = buildName("鸣", "人"); // 鸣人
+    let res2 = buildName("鸣"); // 鸣
+    let res3 = buildName("鸣", "人", "君"); // Supplied parameters do not match any signature of call target.
+
+### 类
+
+- 类
+
+  class Person {
+      name: string; // 这个是对后文this.name类型的定义
+      age: number;
+      constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+      }
+      print() {
+        return this.name + this.age;
+      }
+    }
+  
+    let person: Person = new Person('muyy', 23)
+    console.log(person.print()) // muyy23
+
+- 继承
+
+  class Person {
+      public name: string;  // public、private、static 是 typescript 中的类访问修饰符
+      age: number;
+      constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+      }
+      tell() {
+        console.log(this.name + this.age);
+      }
+    }
+  
+    class Student extends Person {
+      gender: string;
+      constructor(gender: string) {
+        super("muyy", 23);
+        this.gender = gender;
+      }
+      tell() {
+        console.log(this.name + this.age + this.gender);
+      }
+    }
+  
+    var student = new Student("male");
+    student.tell();  // muyy23male
+
+### 接口
+
+interface LabelValue{
+    label: string;
+}
+
+function printLabel(labelObj: LabelValue){
+    console.log(labelObj.label);
+}
+
+let myObj = {
+    "label":"hello Interface"
+};
+printLabel(myObj);
+
+### 修饰符
+
+-  public 
+
+	-  公共默认为 public
+
+- private 
+
+	- 不能在声明它的类的外部访问
+
+- protected 
+
+	- 成员在派生类中仍然可以访问。
+
+### 介绍泛型，一般使用地方
+
+### 介绍interface
+
+### d.ts作用
+
+### 如何编译
+
+### namespace/modele
 
 ## 网络
 
@@ -1085,6 +2157,9 @@ then可以被链式的调用。
 
 ### TCP
 
+- 三次握手
+- 四次挥手
+
 ### CDN
 
 ### 从输入url到页面展示
@@ -1094,76 +2169,108 @@ then可以被链式的调用。
 浏览器对加载到的资源（HTML、JS、CSS等）进行语法解析，建立相应的内部数据结构（如HTML的DOM）
 载入解析到的资源文件，渲染页面，完成
 
-## 设计模式
+- 
 
-## TypeSctipt
+## 浏览器
 
-### 介绍
+### 浏览器缓存
 
-### 优势
+- 强缓存
 
-### 数据类型
+	- 实现强缓存可以通过两种响应头实现：Expires 和 Cache-Control 。强缓存表示在缓存期间不需要请求，state code 为 200
 
-### 介绍泛型，一般使用地方
+- 协商缓存
 
-### 介绍interface
+	- 如果缓存过期了，我们就可以使用协商缓存来解决问题。协商缓存需要请求，如果缓存有效会返回 304。
+	- 协商缓存需要客户端和服务端共同实现，和强缓存一样，也有两种实现方式
 
-### d.ts作用
+### 事件
 
-### 如何编译
+- 绑定
 
-### namespace/modele
+	- ele.onxxx = function (event) {}
 
-## 安全
+	  兼容性很好，但是一个元素只能绑定一个处理程序，属性赋值会被覆盖 基本等同于写在HTML行间上
 
-### XSS
+	- ele.addEventListener(type事件类型, fn处理函数, false);
 
-### CSRF
+	  IE9以下不兼容，可以为一个事件绑定多个处理程序
 
-## 优化
+	- ele.attachEvent(‘on’ + type, fn); 
 
-### webpack打包
+	  IE独有，一个事件同样可以绑定多个处理程序
 
-- loader
-- dll
-- happypack
-- 代码压缩
-- tree shaking
-- thunk splice
-- 图片base64·
-- exterals
-- 路由懒加载
+- 解除
 
-### 网络
+	- ele.onclick = false/‘’/null;
+	- ele.removeEventListener(type, fn, false);
+	- ele.detachEvent(‘on’ + type, fn);
 
-- Gzip
-- cdn
-- 缓存
-- preload/prefetch/懒加载
-- ssr
+- 事件传播
 
-### 代码优化
+	- 捕获阶段=》目标阶段=》冒泡阶段
+	- 事件传播的阻止
 
-- loading
-- 虚拟列表
-- 懒加载
+		- stopPropagation()
 
-## 工程化
+	- 阻止默认行为
 
-### webpack
+		- preventDefault()
 
-- 构建流程
-- 5大模块
-- 热更新如何实现
-- 性能优化
-- dll
-- tree-shaking
+- 事件委托
 
-### 发布
+  利用事件流的冒泡特性，将子节点的事件绑定在父节点上，然后在回调里面使用事件对象进行区分，优点是节省内存且不需要给子节点销毁事件。
 
-- 项目发布流程
+	- 如果一个节点中的子节点是动态生成的，那么子节点需要注册事件的话应该注册在父节点上
 
-## node
+		- 
+
+- 鼠标事件
+
+	- onmouseover、onmouseout
+
+		- 支持事件冒泡
+
+	- onmouseenter、onmouseleave
+
+- 事件对象
+
+  这个对象里面存放着触发事件的状态，如触发事件的当前元素，键盘事件是哪个按键触发的，滚动事件的位置等等
+
+### bom
+
+- cookie
+
+	- cookie是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器发起请求时被携带并发送到服务器，它通常是告知服务端两个请求是否来自同一浏览器，保持用户的登录状态。
+	- cookie保存的数据不能超过4k
+	- 会随请求发送到服务端，可设置过期时间
+
+- session
+
+	- session代表着服务器在和客户端一次会话的过程，存储着用户会话所需的属性及配置信息，当用户在不同页面之间跳转时，使整个用户会话一直存在。
+
+- localStorage
+
+	- localStorage:存储大小为5M
+	- 不参与请求，除非被清理，否则一直存在
+
+- sessionStorage
+
+	- 存储大小为5M
+	- 不参与请求，页面关闭清除
+
+- indexDB
+
+	- 存储大小没限制
+	- 不参与请求，除非被清理，否则一直存在，运行在浏览器上的非关系型数据库
+
+### 渲染机制
+
+- 处理 HTML 并构建 DOM 树
+- 处理 CSS 构建 CSSOM 树
+- 将 DOM 与 CSSOM 合并成一个渲染树
+- 根据渲染树来布局，计算每个节点的位置
+- 调用 GPU 绘制，合成图层，显示在屏幕上
 
 ## 项目
 
@@ -1172,6 +2279,38 @@ then可以被链式的调用。
 - 介绍
 - 功能点
 - 难点
+
+## 算法
+
+### 冒泡排序
+
+- 
+
+### 快速排序
+
+- 
+
+### 递归
+
+- 年龄一个比一个大2岁
+
+	- 
+
+### 斐波那契
+
+- 
+
+### 有一堆整数，请把他们分成三份，确保每一份和尽量相等
+
+- 
+
+### 实现 lodash 的_.get
+
+- 
+
+### 手写数组转树
+
+- 
 
 ## 构造函数
 
